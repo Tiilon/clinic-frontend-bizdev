@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, CardHeader, CardBody, Button, Table, ListGroup, ListGroupItem, Badge } from "reactstrap";
+import { Container, Row, Col, Card, CardHeader, CardBody, Button, Table } from "reactstrap";
 import React, {useEffect, useState} from 'react';
 import {authAxios} from '../../services/httpServices'
 import {
@@ -97,7 +97,7 @@ const Report = (props) => {
                                     </div>
                                     </Row>
                                 </CardHeader> */}
-                                <Table className="align-items-center table-flush" responsive>
+                                <Table className="align-items-center table-flush mb-2" responsive>
                                     <thead className="thead-light">
                                         <tr>
                                             <th scope="col">Branch</th>
@@ -120,11 +120,12 @@ const Report = (props) => {
                                 </Card>
                             </Col>
                             </Row>
+                            <hr />
                             <div class="row">
-                                <div class='col-12'>
+                                <div class='col-md-12 col-xl-8'>
                                     <h3>Patient's Satisfaction Level - Branch Per Branch</h3>
                                     <BarChart
-                                        width={700}
+                                        width={1500}
                                         height={400}
                                         data={patient_count}
                                         margin={{
@@ -147,7 +148,7 @@ const Report = (props) => {
                                 <div class='col-12'>
                                     <h3>Patient Count Comparison Week On Week (Branches)</h3>
                                     <BarChart
-                                        width={700}
+                                        width={1500}
                                         height={400}
                                         data={patient_count}
                                         margin={{
@@ -214,147 +215,75 @@ const Report = (props) => {
                             <hr />
                         </CardBody>
                         </Card>
-                        <Card>
+                        <Card className='mt-2'>
                             <CardHeader>
-                            <h3 className='text-primary'><strong>HIGHLIGHTS</strong></h3>
+                            <h3 className='text-primary'><strong>HIGHLIGHTS ( Branch by Branch )</strong></h3>
                             </CardHeader>
                             <CardBody>
                                 <Row>
-                                {reportSummary.map(report =>
-                                    <Col md={4}>
-                                    <h4><strong>{report.branch}</strong></h4>
-                                    <hr />
-                                    <h5><strong>Patient Count Highlights</strong></h5>
-                                    <ListGroup>
-                                        <ListGroupItem className="d-flex justify-content-between align-items-center">
-                                            Total Patient Count
-                                            <Badge pill color='primary'>
-                                            {report.current_patient_count}
-                                            </Badge>
-                                            <Badge pill color='primary'>
-                                            Previous figure was {report.previous_patient_count}
-                                            </Badge>
-                                        </ListGroupItem>
-                                    </ListGroup>
-                                    <hr />
-                                    <h5><stong>Feedback Highlights</stong></h5>
-                                    <div className="table-responsive">
-                                        <table className="table align-items-center">
-                                            <tbody className="list">
+                                    <Col md={12} className='mb-5'>
+                                        <Table className="align-items-center table-flush" responsive >
+                                            <thead className="thead-light">
                                                 <tr>
-                                                    <th scope="row">
-                                                    <strong>Excellent</strong>
-                                                    </th>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.excellent_feedback.toFixed(1)}%
-                                                    </Badge>
-                                                    </td>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.excellent_comment}
-                                                    </Badge>
-                                                    </td>
+                                                    <th scope="col">Branch</th>
+                                                    <th scope="col">Total Patient Count</th>
+                                                    <th scope="col">Excellent</th>
+                                                    <th scope="col">Very Good</th>
+                                                    <th scope="col">Good</th>
+                                                    <th scope="col">Fair</th>
+                                                    <th scope="col">Bad</th>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                    <strong>Very Good</strong>
-                                                    </th>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.very_good_feedback.toFixed(1)}%
-                                                    </Badge>
-                                                    </td>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.very_good_comment}
-                                                    </Badge>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                    <strong>Good</strong>
-                                                    </th>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.good_feedback.toFixed(1)}%
-                                                    </Badge>
-                                                    </td>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.good_comment}
-                                                    </Badge>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                    <strong>Fair</strong>
-                                                    </th>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.fair_feedback.toFixed(1)}%
-                                                    </Badge>
-                                                    </td>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.fair_comment}
-                                                    </Badge>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                    <strong>Bad</strong>
-                                                    </th>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.bad_feedback.toFixed(1)}%
-                                                    </Badge>
-                                                    </td>
-                                                    <td>
-                                                    <Badge pill color='primary'>
-                                                    {report.bad_comment}
-                                                    </Badge>
-                                                    </td>
-                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {reportSummary.map(report =>
+                                            <tr>
+                                                <th scope="row">{report.branch}</th>
+                                                <td>{report.current_patient_count} - Previous Count ({report.previous_patient_count})</td>
+                                                <td>{report.excellent_feedback.toFixed(1)}% - ({report.excellent_comment})</td>
+                                                <td>{report.very_good_feedback.toFixed(1)}% - ({report.very_good_comment})</td>
+                                                <td>{report.good_feedback.toFixed(1)}% - ({report.good_comment})</td>
+                                                <td>{report.fair_feedback.toFixed(1)}% - ({report.fair_comment})</td>
+                                                <td>{report.bad_feedback.toFixed(1)}% - ({report.bad_comment})</td>
+                                            </tr>
+                                            )}
                                             </tbody>
-                                        </table>
-                                    </div>
-                                    </Col>     
-                                )}
+                                        </Table>
+                                    </Col>
+                                <hr />
                                 </Row>
                             </CardBody>
                         </Card>
                     </div>
                 </Row>
                 <Row>
-                    <Col md={12}>
+                    <Col md={12} className='mt-3'>
                     <h3 className='text-primary'><strong>FeedBack Comments</strong></h3>
                         {reportSummary.map(report => 
                             report.feedback_comments.map(fb => fb ?
                                 <div className="table-responsive">
-                                        <table className="table align-items-center">
-                                            <thead>
-                                                <th className="align-items-center"><h4><strong>Branch</strong></h4></th>
-                                                <th className="align-items-center"><h4><strong>Patient</strong></h4></th>
-                                                <th className="align-items-center"><h4><strong>Comment</strong></h4></th>
-                                            </thead>
-                                            <tbody className="list">
-                                                <tr>
-                                                    <td>
-                                                    <strong>{fb.branch}</strong>
-                                                    </td>
-                                                    <td>
-                                                    <strong>{fb.patient}</strong>
-                                                    </td>
-                                                    <td>
-                                                    <strong>{fb.comment}</strong>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div> :
+                                    <table className="table align-items-center">
+                                        <thead>
+                                            <th className="align-items-center"><h4><strong>Branch</strong></h4></th>
+                                            <th className="align-items-center"><h4><strong>Patient</strong></h4></th>
+                                            <th className="align-items-center"><h4><strong>Comment</strong></h4></th>
+                                        </thead>
+                                        <tbody className="list">
+                                            <tr>
+                                                <td>
+                                                <strong>{fb.branch}</strong>
+                                                </td>
+                                                <td>
+                                                <strong>{fb.patient}</strong>
+                                                </td>
+                                                <td>
+                                                <strong>{fb.comment}</strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div> :
                                 'There is no Data to Show'
-                                ))}
+                            ))}
                     </Col>
                 </Row>
             </Container>   

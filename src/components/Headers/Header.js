@@ -107,7 +107,7 @@ const Header = () => {
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-danger mr-2">
-                        {newClientsPer}%
+                        {typeof newClientsPer === 'number' ? newClientsPer.toFixed(1) : newClientsPer}%
                       </span>
                     </p>
                   </CardBody>
@@ -134,7 +134,7 @@ const Header = () => {
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-warning mr-2">
-                        {subClientsPer}%
+                        {typeof subClientsPer === 'number' ? subClientsPer.toFixed(1): subClientsPer}%
                       </span>
                     </p>
                   </CardBody>
@@ -161,13 +161,12 @@ const Header = () => {
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
-                        {walkInPer}%
+                        {typeof walkInPer === 'number' ? walkInPer.toFixed(1) : walkInPer}%
                       </span>
                     </p>
                   </CardBody>
                 </Card>
-              </Col>
-              
+              </Col>      
             </Row>
           </div>
         </Container>

@@ -36,14 +36,23 @@ const AdminNavbar = (props) => {
 
   useEffect(() => {
     async function getData(){
-        const {data} = await authAxios.get(`marketing/dashboard`)
-        setProfile(data.profile)
-        setUser(data.user)
-        // try{
-        //   const jwt = localStorage.getItem('user')
-        //   const user = jwtDecode(jwt)
-        //   this.setState({currentUser:user})   
-        // }catch(e){}
+
+      try{
+        const dp = localStorage.getItem('profile')
+        const use = localStorage.getItem('user')
+        if(dp && use) {
+          setProfile(dp)
+          setUser(use)
+        }else{
+          const {data} = await authAxios.get(`marketing/dashboard`) 
+          localStorage.setItem('profile', data.profile)
+          localStorage.setItem('user', data.user)
+          const dp = localStorage.getItem('profile')
+          const use = localStorage.getItem('user')
+          setProfile(dp)
+          setUser(use)
+        }
+      }catch(e){}   
     }
     getData();
   }, [])
@@ -54,6 +63,8 @@ const AdminNavbar = (props) => {
   })
   localStorage.removeItem("access_token")
   localStorage.removeItem("refresh_token")
+  localStorage.removeItem("user")
+  localStorage.removeItem("profile")
   authAxios.defaults.headers['Authorization'] = null;
   window.location = '/auth/login';
   }

@@ -64,11 +64,11 @@ const Attendances = (props) => {
                     <div className="col">
                         <Card className="shadow">
                         <CardHeader className="bg-transparent">
-                            <h3 className="mb-0">Weekly Patient Attendance</h3>
+                            {/* <h3 className="mb-0">Weekly Patient Attendance</h3> */}
                         </CardHeader>
                         <CardBody>
                         <MaterialTable 
-                            title="Staff"
+                            title="Attendances"
                             data={data}
                             columns={columns}
                             options={{
